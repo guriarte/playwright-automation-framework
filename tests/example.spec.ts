@@ -1,23 +1,24 @@
 import { test, expect } from '@playwright/test';
+import Assert from '../pages/assert';
 import HomePage from '../pages/homePage';
 import LoginPage from '../pages/loginPage';
 
 test('Customer logs in, searches and purchases a product', async ({ page }) => {
   const homePage = new HomePage(page);
   const loginPage = new LoginPage(page);
-  // const responsePromise = page.waitForResponse(
-  //   'http://localhost:8091/users/login',
-  // );
+  const assert = new Assert(page);
+  const loginApiResponsePromise = loginPage.interceptLoginApi();
 
   await homePage.open();
   await homePage.clickSignInButton();
 
-  loginPage.waitForLoad();
-  // await page
-  //   .locator('[data-test="email"]')
-  //   .fill('customer@practicesoftwaretesting.com');
-  // await page.locator('[data-test="password"]').fill('welcome01');
-  // await page.locator('[data-test="login-submit"]').click();
+  await loginPage.waitForLoad();
+  await loginPage.fillEmail('customer@practicesoftwaretesting.com');
+  await loginPage.fillPassword('welcome01');
+  await loginPage.clickSubmitButton();
+
+  const response = await loginApiResponsePromise;
+  await assert.networkCallStatus(response, 200);
 
   // const response = await responsePromise;
   // expect(response.status()).toBe(200);

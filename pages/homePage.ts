@@ -5,7 +5,7 @@ export default class HomePage {
   constructor(private page: Page) {}
 
   async open() {
-    test.step('Opening Homepage', () => {
+    await test.step('Opening Homepage', () => {
       this.page.goto('/');
     });
   }
