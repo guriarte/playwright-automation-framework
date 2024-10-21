@@ -1,11 +1,11 @@
 import { Page, test, Response } from '@playwright/test';
+import { LoginPageElements } from './elements/loginPageElements';
+import { ReadOnlyElement } from '../types/elements';
 
 export default class LoginPage {
   private readonly uri = 'auth/login';
   private readonly loginApi = 'users/login';
-  private readonly emailTextBox = '[data-test="email"]';
-  private readonly passwordTextBox = '[data-test="password"]';
-  private readonly submitButton = '[data-test="login-submit"]';
+
   constructor(private page: Page) {}
 
   async waitForLoad() {
@@ -15,20 +15,24 @@ export default class LoginPage {
   }
 
   async fillEmail(email: string) {
-    await test.step(`Filling Email textbox with ${email}`, async () => {
-      await this.page.locator(this.emailTextBox).fill(email);
+    await test.step(`Filling ${LoginPageElements.emailTextBox.description} with ${email}`, async () => {
+      await this.page
+        .locator(LoginPageElements.emailTextBox.selector)
+        .fill(email);
     });
   }
 
   async fillPassword(password: string) {
-    await test.step(`Filling Password textbox`, async () => {
-      await this.page.locator(this.passwordTextBox).fill(password);
+    await test.step(`Filling ${LoginPageElements.passwordTextBox.description}`, async () => {
+      await this.page
+        .locator(LoginPageElements.passwordTextBox.selector)
+        .fill(password);
     });
   }
 
   async clickSubmitButton() {
-    await test.step('Clicking Submit button in Login Page', async () => {
-      await this.page.locator(this.submitButton).click();
+    await test.step(`Clicking ${LoginPageElements.submitButton.description}`, async () => {
+      await this.page.locator(LoginPageElements.submitButton.selector).click();
     });
   }
 

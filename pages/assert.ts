@@ -1,4 +1,5 @@
 import { Page, expect, Response, test } from '@playwright/test';
+import { ReadOnlyElement } from '../types/elements';
 
 export default class Assert {
   constructor(private page: Page) {}
@@ -9,9 +10,9 @@ export default class Assert {
     });
   }
 
-  async elementToBeVisible(locator: string) {
-    await test.step(`Asserting if ${locator} is visible`, async () => {
-      await expect(this.page.locator(locator)).toBeVisible();
+  async elementToBeVisible(element: ReadOnlyElement) {
+    await test.step(`Asserting if ${element.description} is visible`, async () => {
+      await expect(this.page.locator(element.selector)).toBeVisible();
     });
   }
 }

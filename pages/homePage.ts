@@ -1,7 +1,8 @@
 import { Page, test } from '@playwright/test';
+import { HomePageElements } from './elements/homePageElements';
+import { ReadOnlyElement } from '../types/elements';
 
 export default class HomePage {
-  private readonly signInButton = '[data-test="nav-sign-in"]';
   constructor(private page: Page) {}
 
   async open() {
@@ -11,8 +12,8 @@ export default class HomePage {
   }
 
   async clickSignInButton() {
-    await test.step(`Clicking on Sign In Button inside Homepage`, async () => {
-      await this.page.locator(this.signInButton).click();
+    await test.step(`Clicking on ${HomePageElements.signInButton.description}`, async () => {
+      await this.page.locator(HomePageElements.signInButton.selector).click();
     });
   }
 }

@@ -21,7 +21,7 @@ test('Customer logs in, searches and purchases a product', async ({ page }) => {
 
   await assert.networkCallStatus(await loginApiResponsePromise, 200);
 
-  await assert.elementToBeVisible(accountPage.profileButtonSelector());
+  await assert.elementToBeVisible(accountPage.profileButtonSelector);
 
   // await expect(page.locator('[data-test="nav-profile"]')).toBeVisible();
   // expect(page.waitForURL('**/account'));

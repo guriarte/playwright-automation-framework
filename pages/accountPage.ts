@@ -1,10 +1,11 @@
 import { Page, test } from '@playwright/test';
+import { ReadOnlyElement } from '../types/elements';
+import { AccountPageElements } from './elements/accountPageElements';
 
 export default class AccountPage {
-  private readonly profileButton = '[data-test="nav-profile"]';
   constructor(private page: Page) {}
 
-  profileButtonSelector(): string {
-    return this.profileButton;
+  get profileButtonSelector(): ReadOnlyElement {
+    return AccountPageElements.profileButton;
   }
 }
