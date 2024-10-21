@@ -8,4 +8,10 @@ export default class Assert {
       expect(response.status()).toBe(statusCode);
     });
   }
+
+  async elementToBeVisible(locator: string) {
+    await test.step(`Asserting if ${locator} is visible`, async () => {
+      await expect(this.page.locator(locator)).toBeVisible();
+    });
+  }
 }

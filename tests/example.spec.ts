@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import AccountPage from '../pages/accountPage';
 import Assert from '../pages/assert';
 import HomePage from '../pages/homePage';
 import LoginPage from '../pages/loginPage';
@@ -7,6 +8,7 @@ test('Customer logs in, searches and purchases a product', async ({ page }) => {
   const homePage = new HomePage(page);
   const loginPage = new LoginPage(page);
   const assert = new Assert(page);
+  const accountPage = new AccountPage(page);
   const loginApiResponsePromise = loginPage.interceptLoginApi();
 
   await homePage.open();
@@ -17,11 +19,9 @@ test('Customer logs in, searches and purchases a product', async ({ page }) => {
   await loginPage.fillPassword('welcome01');
   await loginPage.clickSubmitButton();
 
-  const response = await loginApiResponsePromise;
-  await assert.networkCallStatus(response, 200);
+  await assert.networkCallStatus(await loginApiResponsePromise, 200);
 
-  // const response = await responsePromise;
-  // expect(response.status()).toBe(200);
+  await assert.elementToBeVisible(accountPage.profileButtonSelector());
 
   // await expect(page.locator('[data-test="nav-profile"]')).toBeVisible();
   // expect(page.waitForURL('**/account'));
