@@ -15,4 +15,16 @@ export default class Assert {
       await expect(this.page.locator(element.selector)).toBeVisible();
     });
   }
+
+  async elementHasValue(element: ReadOnlyElement, value: string | RegExp) {
+    await test.step(`Asserting if ${element.description} has value ${value}`, async () => {
+      await expect(this.page.locator(element.selector)).toHaveValue(value);
+    });
+  }
+
+  async urlContains(uri: string) {
+    await test.step(`Asserting if URL contains "${uri}"`, async () => {
+      await expect(this.page.url()).toContain(uri);
+    });
+  }
 }

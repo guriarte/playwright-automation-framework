@@ -11,9 +11,24 @@ export default class HomePage {
     });
   }
 
+  async searchForProduct(product: string) {
+    await test.step(`Searching for ${product} on ${HomePageElements.searchBar.description}`, async () => {
+      await this.page
+        .locator(HomePageElements.searchBar.selector)
+        .fill(product);
+      await this.page.keyboard.press('Enter');
+    });
+  }
+
   async clickSignInButton() {
     await test.step(`Clicking on ${HomePageElements.signInButton.description}`, async () => {
       await this.page.locator(HomePageElements.signInButton.selector).click();
+    });
+  }
+
+  async clickOnProduct(product: string) {
+    await test.step(`Clicking on ${product} product`, async () => {
+      await this.page.getByAltText(product).click();
     });
   }
 }

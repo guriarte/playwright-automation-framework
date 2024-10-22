@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import AccountPage from '../pages/accountPage';
 import Assert from '../pages/assert';
+import ProductPage from '../pages/productPage';
 import HomePage from '../pages/homePage';
 import LoginPage from '../pages/loginPage';
 
@@ -9,6 +10,7 @@ test('Customer logs in, searches and purchases a product', async ({ page }) => {
   const loginPage = new LoginPage(page);
   const assert = new Assert(page);
   const accountPage = new AccountPage(page);
+  const productPage = new ProductPage(page);
   const loginApiResponsePromise = loginPage.interceptLoginApi();
 
   await homePage.open();
@@ -21,21 +23,18 @@ test('Customer logs in, searches and purchases a product', async ({ page }) => {
 
   await assert.networkCallStatus(await loginApiResponsePromise, 200);
 
+  await accountPage.waitForLoad();
   await assert.elementToBeVisible(accountPage.profileButtonSelector);
+  await accountPage.clickHomeButton();
 
-  // await expect(page.locator('[data-test="nav-profile"]')).toBeVisible();
-  // expect(page.waitForURL('**/account'));
+  await homePage.searchForProduct('Combination Pliers');
+  await homePage.clickOnProduct('Combination Pliers');
 
-  // await page.getByRole('link', { name: 'Practice Software Testing -' }).click();
-  // await page.locator('[data-test="search-query"]').fill('Combination Pliers');
-  // await page.keyboard.press('Enter');
-  // await page.getByAltText('Combination Pliers').click();
-  // expect(page.url()).toContain('/product');
-  // await page
-  //   .locator('[data-test="increase-quantity"]')
-  //   .click({ clickCount: 2 });
-  // expect(page.locator('[data-test="quantity"]')).toHaveValue('3');
-
+  await assert.urlContains(productPage.productPageUri);
+  await productPage.clickIncreaseQuantity({ clickCount: 2 });
+  await assert.elementHasValue(productPage.quantityInputBox, '3');
+  await productPage.clickAddToCartButton();
+  await assert.elementToBeVisible(productPage.itemAddedToCartModal);
   // await page.locator('[data-test="add-to-cart"]').click();
   // await expect(
   //   page.locator('div').filter({ hasText: 'Product added to shopping' }).nth(2),

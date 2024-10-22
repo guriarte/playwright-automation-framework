@@ -7,4 +7,9 @@ export class HomePageElements {
     selector: '[data-test="nav-sign-in"]',
     description: `Sign In Button in ${this.pageName}`,
   };
+
+  static readonly searchBar: ReadOnlyElement = {
+    selector: '[data-test="search-query"]',
+    description: `Search Bar in ${this.pageName}`,
+  };
 }
