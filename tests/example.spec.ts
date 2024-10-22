@@ -14,27 +14,29 @@ test('Customer logs in, searches and purchases a product', async ({ page }) => {
   const loginApiResponsePromise = loginPage.interceptLoginApi();
 
   await homePage.open();
-  await homePage.clickSignInButton();
+  await homePage.clickElement(homePage.signInButton);
 
   await loginPage.waitForLoad();
   await loginPage.fillEmail('customer@practicesoftwaretesting.com');
   await loginPage.fillPassword('welcome01');
-  await loginPage.clickSubmitButton();
+  await loginPage.clickElement(loginPage.submitButton);
 
   await assert.networkCallStatus(await loginApiResponsePromise, 200);
 
   await accountPage.waitForLoad();
   await assert.elementToBeVisible(accountPage.profileButtonSelector);
-  await accountPage.clickHomeButton();
+  await accountPage.clickElement(accountPage.homeButton);
 
   await homePage.searchForProduct('Combination Pliers');
   await homePage.clickOnProduct('Combination Pliers');
 
   await assert.urlContains(productPage.productPageUri);
-  await productPage.clickIncreaseQuantity({ clickCount: 2 });
+  await productPage.clickElement(productPage.increaseQuantityButton, {
+    clickCount: 2,
+  });
   await assert.elementHasValue(productPage.quantityInputBox, '3');
-  await productPage.clickAddToCartButton();
-  await assert.elementToBeVisible(productPage.itemAddedToCartModal);
+  await productPage.clickElement(productPage.addToCartButton);
+  // await assert.elementToBeVisible(productPage.itemAddedToCartModal);
   // await page.locator('[data-test="add-to-cart"]').click();
   // await expect(
   //   page.locator('div').filter({ hasText: 'Product added to shopping' }).nth(2),

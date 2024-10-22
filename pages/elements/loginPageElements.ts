@@ -15,6 +15,6 @@ export class LoginPageElements {
 
   static readonly submitButton: ReadOnlyElement = {
     selector: '[data-test="login-submit"]',
-    description: `Submit Button in ${this.pageName}`,
+    description: `Submit button in ${this.pageName}`,
   };
 }

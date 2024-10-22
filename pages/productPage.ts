@@ -1,31 +1,28 @@
 import { Page, test } from '@playwright/test';
 import { ReadOnlyElement } from '../types/elements';
+import BasePage from './basePage';
 import { ProductPageElements } from './elements/productPageElements';
 
-export default class ProductPage {
+export default class ProductPage extends BasePage {
   private readonly uri = 'product';
 
-  constructor(private page: Page) {}
-
-  async clickIncreaseQuantity(
-    options: { clickCount?: number } = { clickCount: 1 },
-  ) {
-    const { clickCount } = options;
-
-    await test.step(`Clicking on ${ProductPageElements.increaseQuantityButton.description}`, async () => {
-      await this.page
-        .locator(ProductPageElements.increaseQuantityButton.selector)
-        .click({ clickCount });
-    });
+  constructor(page: Page) {
+    super(page);
   }
 
-  async clickAddToCartButton() {}
-
-  get productPageUri() {
+  get productPageUri(): string {
     return this.uri;
   }
 
-  get quantityInputBox() {
+  get addToCartButton(): ReadOnlyElement {
+    return ProductPageElements.addToCartButton;
+  }
+
+  get quantityInputBox(): ReadOnlyElement {
     return ProductPageElements.quantityInputBox;
+  }
+
+  get increaseQuantityButton(): ReadOnlyElement {
+    return ProductPageElements.increaseQuantityButton;
   }
 }

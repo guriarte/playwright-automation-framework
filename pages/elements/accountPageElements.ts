@@ -5,11 +5,11 @@ export class AccountPageElements {
 
   static readonly profileButton: ReadOnlyElement = {
     selector: '[data-test="nav-profile"]',
-    description: `Profile Button in ${this.pageName}`,
+    description: `Profile button in ${this.pageName}`,
   };
 
   static readonly homeButton: ReadOnlyElement = {
     selector: '[data-test="nav-home"]',
-    description: `Home Button in ${this.pageName}`,
+    description: `Home button in ${this.pageName}`,
   };
 }

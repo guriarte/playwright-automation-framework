@@ -5,11 +5,16 @@ export class ProductPageElements {
 
   static readonly increaseQuantityButton: ReadOnlyElement = {
     selector: '[data-test="increase-quantity"]',
-    description: `Increase Quantity Button in ${this.pageName}`,
+    description: `Increase Quantity button in ${this.pageName}`,
   };
 
   static readonly quantityInputBox: ReadOnlyElement = {
     selector: '[data-test="quantity"]',
-    description: `Quantity Input Box in ${this.pageName}`,
+    description: `Quantity input box in ${this.pageName}`,
+  };
+
+  static readonly addToCartButton: ReadOnlyElement = {
+    selector: '[data-test="add-to-cart"]',
+    description: `Add To Cart button in ${this.pageName}`,
   };
 }

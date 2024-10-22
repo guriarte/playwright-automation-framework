@@ -1,12 +1,15 @@
 import { Page, test, Response } from '@playwright/test';
 import { LoginPageElements } from './elements/loginPageElements';
 import { ReadOnlyElement } from '../types/elements';
+import BasePage from './basePage';
 
-export default class LoginPage {
+export default class LoginPage extends BasePage {
   private readonly uri = 'auth/login';
   private readonly loginApi = 'users/login';
 
-  constructor(private page: Page) {}
+  constructor(page: Page) {
+    super(page);
+  }
 
   async waitForLoad() {
     await test.step('Waiting for Login Page to load', async () => {
@@ -30,13 +33,11 @@ export default class LoginPage {
     });
   }
 
-  async clickSubmitButton() {
-    await test.step(`Clicking ${LoginPageElements.submitButton.description}`, async () => {
-      await this.page.locator(LoginPageElements.submitButton.selector).click();
-    });
-  }
-
   interceptLoginApi(): Promise<Response> {
     return this.page.waitForResponse(`http://localhost:8091/${this.loginApi}`);
+  }
+
+  get submitButton(): ReadOnlyElement {
+    return LoginPageElements.submitButton;
   }
 }

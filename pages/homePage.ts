@@ -1,9 +1,12 @@
 import { Page, test } from '@playwright/test';
 import { HomePageElements } from './elements/homePageElements';
 import { ReadOnlyElement } from '../types/elements';
+import BasePage from './basePage';
 
-export default class HomePage {
-  constructor(private page: Page) {}
+export default class HomePage extends BasePage {
+  constructor(page: Page) {
+    super(page);
+  }
 
   async open() {
     await test.step('Opening Homepage', () => {
@@ -20,15 +23,13 @@ export default class HomePage {
     });
   }
 
-  async clickSignInButton() {
-    await test.step(`Clicking on ${HomePageElements.signInButton.description}`, async () => {
-      await this.page.locator(HomePageElements.signInButton.selector).click();
-    });
-  }
-
   async clickOnProduct(product: string) {
     await test.step(`Clicking on ${product} product`, async () => {
       await this.page.getByAltText(product).click();
     });
+  }
+
+  get signInButton(): ReadOnlyElement {
+    return HomePageElements.signInButton;
   }
 }

@@ -1,11 +1,14 @@
 import { Page, test } from '@playwright/test';
 import { ReadOnlyElement } from '../types/elements';
+import BasePage from './basePage';
 import { AccountPageElements } from './elements/accountPageElements';
 
-export default class AccountPage {
+export default class AccountPage extends BasePage {
   private readonly uri = 'account';
 
-  constructor(private page: Page) {}
+  constructor(page: Page) {
+    super(page);
+  }
 
   async waitForLoad() {
     await test.step('Waiting for Account Page to load', async () => {
@@ -13,13 +16,11 @@ export default class AccountPage {
     });
   }
 
-  async clickHomeButton() {
-    await test.step(`Clicking on ${AccountPageElements.homeButton.description}`, async () => {
-      await this.page.locator(AccountPageElements.homeButton.selector).click();
-    });
-  }
-
   get profileButtonSelector(): ReadOnlyElement {
     return AccountPageElements.profileButton;
+  }
+
+  get homeButton(): ReadOnlyElement {
+    return AccountPageElements.homeButton;
   }
 }
