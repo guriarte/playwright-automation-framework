@@ -19,4 +19,10 @@ export default class BasePage {
       await this.page.locator(element.selector).click(options);
     });
   }
+
+  async selectFromDropdown(dropdown: ReadOnlyElement, option: string) {
+    await test.step(`Selecting ${option} from ${dropdown.description}`, async () => {
+      await this.page.locator(dropdown.selector).selectOption(option);
+    });
+  }
 }

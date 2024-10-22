@@ -5,6 +5,8 @@ import ProductPage from '../pages/productPage';
 import HomePage from '../pages/homePage';
 import LoginPage from '../pages/loginPage';
 import CheckoutPage from '../pages/checkoutPage';
+import { fakeStreetAddressForm } from '../fixtures/billingAddressForm';
+import { janeDoeCreditCardForm } from '../fixtures/janeDoeCreditCardForm';
 
 test('Customer logs in, searches and purchases a product', async ({ page }) => {
   const homePage = new HomePage(page);
@@ -41,36 +43,30 @@ test('Customer logs in, searches and purchases a product', async ({ page }) => {
   await assert.elementToBeVisible(productPage.itemAddedToCartModal);
   await productPage.clickElement(productPage.itemAddedToCartModal);
   await productPage.clickElement(productPage.shoppingCartButton);
-  await assert.elementToBeVisible(checkoutPage.proceedToCheckoutButton);
+
+  await assert.elementToBeVisible(
+    checkoutPage.proceedToCheckoutButtonInStepOne,
+  );
   await assert.urlContains(checkoutPage.checkoutPageUri);
   await checkoutPage.inputQuantityForProduct('Combination Pliers', '10');
-  // await page.locator('[data-test="proceed-1"]').click();
-  await checkoutPage.clickElement(checkoutPage.proceedToCheckoutButton);
-  // await expect(page.getByText('You can proceed to checkout')).toBeVisible();
+  await checkoutPage.clickElement(
+    checkoutPage.proceedToCheckoutButtonInStepOne,
+  );
   await assert.textToBeVisible('You can proceed to checkout');
-  // await page.locator('[data-test="proceed-2"]').click();
-  // await page.locator('[data-test="address"]').clear();
-  // await page.locator('[data-test="address"]').fill('123 Fake St');
-  // await page.locator('[data-test="city"]').clear();
-  // await page.locator('[data-test="city"]').fill('Fake City');
-  // await page.locator('[data-test="state"]').clear();
-  // await page.locator('[data-test="state"]').fill('Fake State');
-  // await page.locator('[data-test="country"]').clear();
-  // await page.locator('[data-test="country"]').fill('Fake Country');
-  // await page.locator('[data-test="postcode"]').clear();
-  // await page.locator('[data-test="postcode"]').fill('12345');
-  // await page.locator('[data-test="proceed-3"]').click();
-  // await page
-  //   .locator('[data-test="payment-method"]')
-  //   .selectOption('Credit Card');
-  // await page
-  //   .locator('[data-test="credit_card_number"]')
-  //   .fill('1234-5678-1234-5678');
-  // await page.locator('[data-test="expiration_date"]').fill('11/2040');
-  // await page.locator('[data-test="cvv"]').fill('123');
-  // await page.locator('[data-test="card_holder_name"]').fill('Jane Doe');
-  // await page.locator('[data-test="finish"]').click();
-  // await expect(page.getByText('Payment was successful')).toBeVisible();
-  // await page.locator('[data-test="finish"]').click();
-  // await expect(page.getByText('Thanks for your order!')).toBeVisible();
+  await checkoutPage.clickElement(
+    checkoutPage.proceedToCheckoutButtonInStepTwo,
+  );
+  await checkoutPage.fillBillingAddressFormWith(fakeStreetAddressForm);
+  await checkoutPage.clickElement(
+    checkoutPage.proceedToCheckoutButtonInStepThree,
+  );
+  await checkoutPage.selectFromDropdown(
+    checkoutPage.paymentMethodDropdown,
+    'Credit Card',
+  );
+  await checkoutPage.fillCreditCardFormWith(janeDoeCreditCardForm);
+  await checkoutPage.clickElement(checkoutPage.confirmButton);
+  await assert.textToBeVisible('Payment was successful');
+  await checkoutPage.clickElement(checkoutPage.confirmButton);
+  await assert.textToBeVisible('Thanks for your order!');
 });
