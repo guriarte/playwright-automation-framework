@@ -25,4 +25,8 @@ export default class ProductPage extends BasePage {
   get increaseQuantityButton(): ReadOnlyElement {
     return ProductPageElements.increaseQuantityButton;
   }
+
+  get itemAddedToCartModal(): ReadOnlyElement {
+    return ProductPageElements.itemAddedToCartModal;
+  }
 }

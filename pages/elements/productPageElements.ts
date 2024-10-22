@@ -17,4 +17,9 @@ export class ProductPageElements {
     selector: '[data-test="add-to-cart"]',
     description: `Add To Cart button in ${this.pageName}`,
   };
+
+  static readonly itemAddedToCartModal: ReadOnlyElement = {
+    selector: '[id="toast-container"]',
+    description: `Item Added To Cart modal in ${this.pageName}`,
+  };
 }

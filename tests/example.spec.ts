@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import AccountPage from '../pages/accountPage';
-import Assert from '../pages/assert';
+import Assert from '../helpers/assert';
 import ProductPage from '../pages/productPage';
 import HomePage from '../pages/homePage';
 import LoginPage from '../pages/loginPage';
@@ -36,13 +36,10 @@ test('Customer logs in, searches and purchases a product', async ({ page }) => {
   });
   await assert.elementHasValue(productPage.quantityInputBox, '3');
   await productPage.clickElement(productPage.addToCartButton);
-  // await assert.elementToBeVisible(productPage.itemAddedToCartModal);
-  // await page.locator('[data-test="add-to-cart"]').click();
-  // await expect(
-  //   page.locator('div').filter({ hasText: 'Product added to shopping' }).nth(2),
-  // ).toBeVisible();
+  await assert.elementToBeVisible(productPage.itemAddedToCartModal);
 
   // await page.locator('[data-test="nav-cart"]').click();
+  await productPage.clickElement();
   // await expect(page.locator('[data-test="proceed-1"]')).toBeVisible();
   // expect(page.url()).toContain('/checkout');
   // await page.getByLabel('Quantity for Combination').clear();
