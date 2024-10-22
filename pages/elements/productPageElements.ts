@@ -1,4 +1,5 @@
 import { ReadOnlyElement } from '../../types/elements';
+import { HeaderElements } from './headerElements';
 
 export class ProductPageElements {
   static readonly pageName = 'Product Page';
@@ -20,6 +21,11 @@ export class ProductPageElements {
 
   static readonly itemAddedToCartModal: ReadOnlyElement = {
     selector: '[id="toast-container"]',
+    description: `Item Added To Cart modal in ${this.pageName}`,
+  };
+
+  static readonly shoppingCartButton: ReadOnlyElement = {
+    selector: HeaderElements.shoppingCartButtonSelector,
     description: `Item Added To Cart modal in ${this.pageName}`,
   };
 }

@@ -1,4 +1,5 @@
 import { ReadOnlyElement } from '../../types/elements';
+import { HeaderElements } from './headerElements';
 
 export class AccountPageElements {
   static readonly pageName = 'Account Page';
@@ -9,7 +10,7 @@ export class AccountPageElements {
   };
 
   static readonly homeButton: ReadOnlyElement = {
-    selector: '[data-test="nav-home"]',
+    selector: HeaderElements.homeButtonSelector,
     description: `Home button in ${this.pageName}`,
   };
 }

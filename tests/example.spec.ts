@@ -37,9 +37,7 @@ test('Customer logs in, searches and purchases a product', async ({ page }) => {
   await assert.elementHasValue(productPage.quantityInputBox, '3');
   await productPage.clickElement(productPage.addToCartButton);
   await assert.elementToBeVisible(productPage.itemAddedToCartModal);
-
-  // await page.locator('[data-test="nav-cart"]').click();
-  await productPage.clickElement();
+  await productPage.clickElement(productPage.shoppingCartButton);
   // await expect(page.locator('[data-test="proceed-1"]')).toBeVisible();
   // expect(page.url()).toContain('/checkout');
   // await page.getByLabel('Quantity for Combination').clear();

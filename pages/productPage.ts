@@ -29,4 +29,8 @@ export default class ProductPage extends BasePage {
   get itemAddedToCartModal(): ReadOnlyElement {
     return ProductPageElements.itemAddedToCartModal;
   }
+
+  get shoppingCartButton(): ReadOnlyElement {
+    return ProductPageElements.shoppingCartButton;
+  }
 }

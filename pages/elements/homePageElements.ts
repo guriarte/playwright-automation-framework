@@ -1,10 +1,11 @@
 import { ReadOnlyElement } from '../../types/elements';
+import { HeaderElements } from './headerElements';
 
 export class HomePageElements {
   static readonly pageName = 'Homepage';
 
   static readonly signInButton: ReadOnlyElement = {
-    selector: '[data-test="nav-sign-in"]',
+    selector: HeaderElements.signInButtonSelector,
     description: `Sign In button in ${this.pageName}`,
   };
 
