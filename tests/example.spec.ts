@@ -4,6 +4,7 @@ import Assert from '../helpers/assert';
 import ProductPage from '../pages/productPage';
 import HomePage from '../pages/homePage';
 import LoginPage from '../pages/loginPage';
+import CheckoutPage from '../pages/checkoutPage';
 
 test('Customer logs in, searches and purchases a product', async ({ page }) => {
   const homePage = new HomePage(page);
@@ -11,6 +12,7 @@ test('Customer logs in, searches and purchases a product', async ({ page }) => {
   const assert = new Assert(page);
   const accountPage = new AccountPage(page);
   const productPage = new ProductPage(page);
+  const checkoutPage = new CheckoutPage(page);
   const loginApiResponsePromise = loginPage.interceptLoginApi();
 
   await homePage.open();
@@ -37,13 +39,15 @@ test('Customer logs in, searches and purchases a product', async ({ page }) => {
   await assert.elementHasValue(productPage.quantityInputBox, '3');
   await productPage.clickElement(productPage.addToCartButton);
   await assert.elementToBeVisible(productPage.itemAddedToCartModal);
+  await productPage.clickElement(productPage.itemAddedToCartModal);
   await productPage.clickElement(productPage.shoppingCartButton);
-  // await expect(page.locator('[data-test="proceed-1"]')).toBeVisible();
-  // expect(page.url()).toContain('/checkout');
-  // await page.getByLabel('Quantity for Combination').clear();
-  // await page.getByLabel('Quantity for Combination').fill('10');
+  await assert.elementToBeVisible(checkoutPage.proceedToCheckoutButton);
+  await assert.urlContains(checkoutPage.checkoutPageUri);
+  await checkoutPage.inputQuantityForProduct('Combination Pliers', '10');
   // await page.locator('[data-test="proceed-1"]').click();
+  await checkoutPage.clickElement(checkoutPage.proceedToCheckoutButton);
   // await expect(page.getByText('You can proceed to checkout')).toBeVisible();
+  await assert.textToBeVisible('You can proceed to checkout');
   // await page.locator('[data-test="proceed-2"]').click();
   // await page.locator('[data-test="address"]').clear();
   // await page.locator('[data-test="address"]').fill('123 Fake St');

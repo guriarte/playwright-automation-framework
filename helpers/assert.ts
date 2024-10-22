@@ -22,6 +22,12 @@ export default class Assert {
     });
   }
 
+  async textToBeVisible(text: string) {
+    await test.step(`Asserting if text "${text}" is visible`, async () => {
+      await expect(this.page.getByText(text)).toBeVisible();
+    });
+  }
+
   async urlContains(uri: string) {
     await test.step(`Asserting if URL contains "${uri}"`, async () => {
       await expect(this.page.url()).toContain(uri);

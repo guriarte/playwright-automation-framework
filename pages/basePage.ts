@@ -10,7 +10,10 @@ export default class BasePage {
 
   async clickElement(
     element: ReadOnlyElement,
-    options: { clickCount?: number } = { clickCount: 1 },
+    options: { clickCount?: number; force?: boolean } = {
+      clickCount: 1,
+      force: false,
+    },
   ) {
     await test.step(`Clicking on ${element.description}`, async () => {
       await this.page.locator(element.selector).click(options);
