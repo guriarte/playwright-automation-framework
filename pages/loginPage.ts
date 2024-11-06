@@ -34,7 +34,7 @@ export default class LoginPage extends BasePage {
   }
 
   interceptLoginApi(): Promise<Response> {
-    return this.page.waitForResponse(`http://localhost:8091/${this.loginApi}`);
+    return this.page.waitForResponse(`${process.env.API_URL}/${this.loginApi}`);
   }
 
   get submitButton(): ReadOnlyElement {
